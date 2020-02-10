@@ -269,4 +269,224 @@
           }
       }
       ```
+      
 - 참조변수의 형변환
+    - ```
+      class Car {
+          ...
+      }
+
+      class Bus extends Car {
+          ...
+      }
+
+      class Main {
+         public  static void main(String[] args) {
+
+             // 업 캐스팅
+             Car car = new Bus();
+
+             // 다운 캐스팅
+             Bus bus = (Bus)new Car();
+         }
+      }
+      ```
+
+- instanceof 연산자
+    - 상속받은 객체들을 구분할 수 있게 도와주는 연산자
+    - 결과가 true : 검사한 타입으로 형 변환이 가능하다는 의미
+
+- 바인딩
+    - 참조변수와 인스턴스간 바인딩에 따라 호출되는 메서드가 달라짐
+
+- 매개변수의 다형성
+    - 매개변수를 상위 클래스로 해줌으로써, 서로 다른 하위 클래스를 인자로 받을 수 있는 다형성이 생김
+
+- 추상 클래스
+    - 직접적인 인스턴스 생성 불가
+    - 설령 추상 메서드를 지니지 않았더라도 직접적인 인스턴스 생성이 불가능
+
+- 추상 메서드
+    - 상속받아서 오버라이딩해서 사용하기 위해 미완으로 남겨놓는 메서드
+    - Remote로 쓰임?
+
+- 인터페이스
+    - 100% 추상 클래스
+    - 모든 멤버변수는 public static final, 생략가능
+    - 모든 메서드는 public abstract, 생략가능
+    - 인터페이스는 인터페이스로부터만 상속 가능
+    - 다중 상속 가능
+    - 클래스에서 인터페이스를 implements 할 때, 인터페이스의 메서드 중 일부만을 구현한다면 abstract 클래스가 되어야 함
+    - 장점
+        - 개발시간 단축
+        - 표준화
+        - 독립적인 프로그래밍
+        - 서로 관계없는 클래스간 관계 구축
+
+- 인터페이스를 이용한 다형성
+    - 매개변수가 인터페이스
+        - 인터페이스로 구현한 인스턴스가 매개변수
+    - 리턴값이 인터페이스
+        - 메서드가 해당 인터페이스를 구현한 클래스의 인스턴스 반환
+
+- 인터페이스의 이해
+    - User(A) 와 Provider(B) 사이를 직접적인 관계에서 A-I-B의 간접적 관계로 변경
+    - JDBC가 이렇게 되어있음
+
+- 내부 클래스
+    - 클래스 내에 선언되는 클래스
+    - 외부 클래스와 긴밀한 관계
+    - 내부 클래스는 외부 클래스 이외의 클래스에서는 잘 쓰이지 않는 관계
+    - 장점
+        - 내부 클래스에서 외부 클래스 멤버에 쉽게 접근 가능
+        - 캡슐화
+    - 내부 클래스 파일 생성명
+        - ``` 
+          class Outer {
+              class InstanceInner {
+
+              }
+
+              static class StaticInner {
+
+              }
+
+              void myMethod() {
+                  class LocalInner {
+
+                  }
+              }
+          }
+          ```
+        - Outer.class, Outer$InstanceInner.class, Outer$StaticInner.class, Outer$1LocalInner.class
+
+- 익명 클래스
+    - 클래스 선언과 동시에 객체 생성
+    - 오직 하나의 객체만 생성할 수 있는 일회용 클래스
+    - new 조상클래스 명() { ... }
+    - new 구현인터페이스 명() { ... }
+    - 사용 이유?
+        - 
+
+# Chapter 08 예외처리 (exception handling)
+
+- 프로그램 오류
+    - 컴파일 에러 
+    - 런타임 에러
+    - 논리적 에러
+
+- 런타임 에러
+    - 에러(Error)
+        - 치명적, 비정상적인 종료
+        - 메모리 부족(OutOfMemoryError), 스택오버플로우(StackOverflowError)
+    - 예외(Exception)
+        - 수습 가능한 문제
+        - 예외 계층도
+        <img src="https://t1.daumcdn.net/cfile/tistory/217C6B4552AF12B432" style="cursor: pointer;max-width:100%;height:auto" width="650" height="600" filename="exception2.jpg" filemime="image/jpeg">
+        - Exception 클래스
+            - 사용자의 실수와 같은 외적인 요인에 의해 발생하는 예외
+        - RuntimeException 클래스
+            - 프로그래머의 실수로 발생하는 예외
+
+- 예외 처리
+    - 정의 : 프로그램 실행시 발생하는 예외에 대비한 코드를 작성
+    - 목적 : 프로그램 비정상 종료를 막고, 정상적인 상태 유지
+
+ - 모든 예외 클래스는 Exception 클래스의 자손
+    - catch (Exception e) 로 어떤 종류의 예외라도 받을 수 있음
+    
+- printStackTrace(), getMessage()
+    - 예외에 대한 정보 확인 메서드
+    - printStackTrace() 를 통해 파일 입출력 가능
+
+- 멀티 catch 블럭
+    - ```
+      try {
+
+      } catch (ExceptionA e) {
+        ...
+      } catch (ExceptionB e) {
+        ...
+      }
+
+      try {
+        ...
+      } catch (ExceptionA e | ExceptionB e) {
+        ...
+      }
+      ```
+    - 여러개의 catch 문을 하나로 합칠 수 있음
+    - 단, Exception간 부모 자식 관계를 허용하지 않음
+
+- 예외 발생 시키기
+    - throw new Exception 으로 고의 예외 발생도 가능
+
+- 메서드에 예외 선언
+    - ```
+      void method() throws Exception1, Exception2, ... {
+        ...
+      }
+      ```
+    - 메서드 내에서 발생할 가능성이 있는 예외를 메서드 선언부에 명시
+    - 메서드 사용자에게 이에 대한 처리를 강제
+
+- finally
+    - 예외 발생여부 상관없이 실행되어야할 코드를 실행하는 블록
+    - 예외 발생시, try -> catch -> finally 순
+    - 예외 없을시, try -> finally 순
+
+- try - with - resources
+    - 입출력에 사용되는 클래스 중, 사용한 후 꼭 닫아서 자원 반환을 해줘야 할때 사용
+    - try 블럭을 벗어나는 순간 자동으로 close() 호출
+    - 이후, catch - finally 블럭 실행
+
+- 사용자 정의 예외 만들기
+    - ```
+      class MyException extends Exception {
+          MyException(String msg) {
+              super(msg);
+          }
+      }
+      ```
+    - Exception 클래스 상속시, checked 예외
+    - RuntimeException 클래스 상속시, unchecked 예외 (선택적, 최근 선호)
+
+# Chapter 09 java.lang패키지와 유용한 클래스
+
+- Object 클래스
+    - equals(Object obj)
+        - 두 객체의 같고 다름을 참조변수의 값으로 판단
+    - hashcode()
+        - 주소값 대신 주는 코드
+        - 객체의 주소값을 이용하여 해시코드 만들어 반환
+    - toString()
+        - 클래스명@16진수_해시코드값 반환
+    - clone()
+        - 자신을 복제하여 새 인스턴스 생성
+        - Cloneable 인터페이스를 구현한 클래스에서만 호출 가능
+        - 얕은 복사이므로 깊은 복사가 필요하면 오버라이딩 필요
+        - 예외처리 필요
+    - getClass()
+        - 자신이 속한 클래스의 "Class"객체를 반환
+        - Class객체?
+            - 클래스의 모든 정보 담고있음
+            - 클래스당 1개
+            - '클래스 로더'에 의해 메모리에 올라갈 때 자동 생성
+                - 클래스 로더 : .class 파일을 메모리에 올림
+
+- String 클래스
+    - 덧셈(+) 연산자
+        - 문자열 내부 변경이 불가능한 문자열 클래스
+        - 인스턴스 내 문자열이 바뀌는 것이 아니라 새 문자열을 담은 String인스턴스 생성
+        - 메모리 공간을 차지하므로 결합 횟수를 줄이는 것이 좋음
+    
+    - equals(String str)
+        - 두 객체 안의 리터럴 내용이 같은지 판단
+    - hashcode()
+        - 리터럴의 해시코드를 반환
+    - toString()
+        - 문자열 반환
+
+- StringBuffer 클래스
+    - 문자열 내부 변경이 가능한 문자열 클래스
+    - 문자열간 결합이나 추출 등 문자열을 다루는 작업이 많이 필요한 경우 사용
