@@ -474,19 +474,159 @@
             - '클래스 로더'에 의해 메모리에 올라갈 때 자동 생성
                 - 클래스 로더 : .class 파일을 메모리에 올림
 
-- String 클래스
+- String 클래스 (p470 참고)
     - 덧셈(+) 연산자
         - 문자열 내부 변경이 불가능한 문자열 클래스
         - 인스턴스 내 문자열이 바뀌는 것이 아니라 새 문자열을 담은 String인스턴스 생성
         - 메모리 공간을 차지하므로 결합 횟수를 줄이는 것이 좋음
-    
+    - constructor
+        - ```
+          String s = new String("hello");
+          ```
+        - ```
+          char[] ch = {'h','e','l','l','o'};
+          String s = new String(ch);
+          ```
+        - ```
+          StringBuffer sb = new StringBuffer("hello");
+          String s = new String(sb);
+          ```
+    - charAt(int index)
+        - 지정된 index에 있는 문자를 반환
+        - ```
+          String s = new String("hello");
+          char ch = s.charAt(0);
+          ```
+    - compareTo(String str)
+        - 입력된 문자열과 사전순서로 비교, 같으면 0, 이전 -1, 이후 양수 1
+        - ```
+          int i1 = "aaa".compareTo("aaa");   // return 0
+          int i2 = "aaa".compareTo("bbb");   // return -1
+          int i3 = "bbb".compareTo("aaa");   // return 1
+          ```
+    - concat(String str)
+        - 입력된 문자열을 뒤에 덧붙임
+        - ```
+          String s1 = "hello";
+          String s2 = s1.concat(" world");  // s2 = "hello world"
+          ```
+    - contains(String str)
+        - 입력된 문자열이 포함되어있는지 확인, return true or false
+        - ```
+          String s = "hello";
+          boolean b = s.contains("he");     // b = true
+          ```
+    - endsWith(String str)
+        - 입력된 문자열로 끝나는지 검사, return true or false
+        - ```
+          String s = "hello.txt";
+          boolean b = s.endsWith("txt");    // b = true
+          ```
     - equals(String str)
-        - 두 객체 안의 리터럴 내용이 같은지 판단
+        - 두 객체 안의 리터럴 내용이 같은지 판단, return true or false
+        - ```
+          String s = "hello";
+          boolean b = s.equals("hello");    // b = true
+          ```
+    - equalsIgnoreCase(String str)
+        - 두 객체 안의 리터럴 내용이 같은지 판단(대소문자 무시), return true or false
+        - ```
+          String s = "hello";
+          boolean b = s.equalsIgnoreCase("hello");    // b = true
+          ```
+    - indexOf(char ch)
+        - 주어진 문자가 문자열에 존재하는지 확인하여, 위치를 반환(없다면 -1)
+        - ```
+          String s = "hello";
+          int index = s.indexOf('h');       // index = 0
+          ```
+    - indexOf(char ch, int pos)
+        - 주어진 문자가 문자열 해당 위치부터 존재하는지 확인하여, 위치를 반환(없다면 -1)
+        - ```
+          String s = "hello";
+          int index = s.indexOf('e',0);       // index = 1
+          ```
+    - indexOf(String str)
+        - 주어진 문자열이 문자열에 존재하는지 확인하여, 시작 위치를 반환(없다면 -1)
+        - ```
+          String s = "hello";
+          int index = s.indexOf('el');       // index = 1
+          ```
+    - intern()
+        - 문자열을 상수풀에 등록하고, 이미 같은 내용이 있을 경우 해당 문자열 주소 반환
+    - String replace(char old, char new)
+        - 문자열중 old를 new로 교체하려 반환
+        - ```
+          String s1 = "hello"
+          String s2 = s1.replace('o','l');  // s2 = "helll"
+          ``` 
     - hashcode()
         - 리터럴의 해시코드를 반환
     - toString()
         - 문자열 반환
+    - split()
+        - 문자얄 사이에 구분자 넣어서 분해
+    - join()
+        - 문자열 사이에 구분자 넣어서 결합
 
 - StringBuffer 클래스
+    - 멀티쓰레드에 안전하도록 동기화(thread safe)
+    - 동기화 기능이 들어가므로 StringBuffer의 성능이 떨어짐
     - 문자열 내부 변경이 가능한 문자열 클래스
     - 문자열간 결합이나 추출 등 문자열을 다루는 작업이 많이 필요한 경우 사용
+
+- StringBuilder 클래스
+    - StringBuffer와는 다르게 쓰레드 동기화 기능이 없음, 나머지는 같음
+
+- C에서는 문자열 끝에 널문자, Java에서는 길이정보 따로 보관(널문자 사용 X)
+
+- 보편적인 초기화
+    - String str = null (X) -> String str = "";
+    - char ch = '\u0000'(X) -> char ch = '';
+
+- 문자 인코딩 변환
+    - getBytes(String charset)
+
+- 기본값을 String으로 변환
+    - 숫자 + ""
+    - String.valueOf(int i)     // 성능 우위
+
+- String으 기본값으로 변환
+    - int i = Integer.parseInt("100")   // parse 시리즈가 성능 우위
+    - int j = Integer.valueOf("100")    // 
+
+- 기본값2String / String2기본값 변환에 대한 ref : p474
+
+- Math 클래스
+    - sqrt()
+        - 제곱근 계산
+    - pow()
+        - n제곱 계산
+
+- StaticMath 클래스 
+    - Math는 OS의존적 계산(OS따라 성능차이 및 결과차이 발생)
+    - StaticMath는 성능을 포기하고 OS독립적으로 실행 = 같은 성능 및 결과
+
+- Wrapper 클래스
+    - 기본형 변수를 객체로 다뤄야할 때 사용되는 클래스
+        - 매개변수로 객체를 요구할 때
+        - 기본형 값이 아닌 객체로 저장해야할 때
+        - 객체간 비교할 때
+        - ...
+    - 종류
+        - Boolean
+        - Character
+        - Byte
+        - Short
+        - Integer
+        - Long
+        - Float
+        - Double
+
+- Number 클래스
+    - Boolean, Character 를 제외한 wrapper 클래스의 부모 클래스
+
+- 오토박싱 & 언박싱
+    - 오토박식 : 기본형 값을 래퍼 클래스의 객체로 자동 변환해 주는 것
+    - 언박싱 : 래퍼 클래스의 객체를 기본형 값으로 자동 변환해 주는 것
+
