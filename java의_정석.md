@@ -474,6 +474,18 @@
             - '클래스 로더'에 의해 메모리에 올라갈 때 자동 생성
                 - 클래스 로더 : .class 파일을 메모리에 올림
 
+- Objects 클래스
+    - Object클래스의 보조 클래스, 모든 메서드가 'static'
+    - 객체 비교 및 null check에 유용ㄴ
+    - isNull(Object obj)
+        - null이라면 true, 아니라면 false
+    - nonNoll(Object obj)
+        - null이 아니면 true, 맞다면 false
+    - equals(Object obj1, Object ojb2)
+        - return (a==b)||(a != null && a.equals(b));
+    - deepEquals(Object obj1, Object obj2)
+        - 객체를 재귀적으로 비교
+        - 다차원 배열의 비교도 가능
 - String 클래스 (p470 참고)
     - 덧셈(+) 연산자
         - 문자열 내부 변경이 불가능한 문자열 클래스
@@ -630,3 +642,143 @@
     - 오토박식 : 기본형 값을 래퍼 클래스의 객체로 자동 변환해 주는 것
     - 언박싱 : 래퍼 클래스의 객체를 기본형 값으로 자동 변환해 주는 것
 
+- java.util.regax 패키지
+    - 정규식 관련 패키지
+    - regex.* 클래스
+        - Pattern // 정규식 정의
+        - Matcher // 정규식을 데이터와 비교ㄴ
+    - 정규식 정의 및 데이터와의 비교 과정
+        - 정규식을 매개변수로 Pattern.complie을 호출하여 Pattern 인스턴스 생성
+            - ```
+              Pattern p = Pattern.complie("c[a-z]");
+              ```
+        - 정규식으로 비교할 대상을 매개변수로, Pattern의 Matcher 인스턴스 생성
+            - ```
+              Matcher m = p.matcher(data[i]);
+              ```
+        - Matcher인스턴스에서 matches()를 호출하여 정규식 부합 확인
+            - ```
+              if(matchs.());
+              ```
+        - 정규식 표현 ref : 507p
+
+- java.util.StringTokenizer 클래스
+    - 긴 문자열을 지정된 구분자로 토큰 단위의 여러 문자열로 나눠줌
+    - String의 split, Scanner의 useDelimiter 와 기능 비슷
+    - 정규식 표현이 익숙치 않을 경우 간편하게 사용
+    - 단, 복잡한 형태의 구분자로 문자열을 나눠야 한다면 어쩔수 없이 split 등 권장
+
+- java.math.BigInteger 클래스
+    - long값 이상의 정수값이 필요할 때 사용
+    - 내부적으로 int 배열로 해결, 성능 떨어짐
+    - ref : 518p
+
+- java.math.BigDecimal 클래스
+    - double값 이상의 실수값이 필요할 때 사용
+    - ref : 521p
+
+# Chapter 10 날짜와 시간 & 형식화
+
+- Data 와 Calendar
+    - 최신 내용이 아니므로 패스
+    - ref : 528p
+
+- java.time 패키지
+    - jdk 1.8부터 지원하는 날짜와 시간 관련 패키지
+    - 해당 패키지에 포함된 클래스들의 특징은 immutable이라는 것
+    - java.time 하위 패키지
+        - .chrono : 표준(IOS)이 아닌 달력 시스템을 위한 클래스 제공
+        - .format : 날짜와 시간을 파싱하고, 형식화하기 위한 클래스 제공
+        - .temporal : 날짜와 시간의 필드(field)와 단위(unit)를 위한 클래스 제공
+        - .zone : 시간대(time-zone)와 관련된 클래스 제공
+
+- java.time 핵심 클래스
+    - 시간 표현 : LocalTime 클래스
+    - 날짜 표현 : LocalDate 클래스
+    - 시간 날짜 : LocalDateTime 클래스
+    - 시간 날짜 + 시간대 : ZonedDateTime 클래스
+    - 객체의 생성 (static)메서드
+        - now() : 지금 시간대로 객체 생성
+        - of() : 지정 시간대로 객체 생성
+
+- LocalTime/LocalDate
+    - ref : 555p
+    - 예제 : 559p
+
+- 이후 내용들은 패스 (나중에 정리 예정)
+
+# Chaper 11 컬렉션 프레임워크
+
+- 데이터 군을 저장하는 클래스들을 표준화한 설계
+
+- 컬렉션 프레임워크 핵심 인터페이스간 상속도
+    - collectrion 
+        - List
+            - 순서가 있는 데이터 집합
+            - 데이터 중복 허용
+            - ArrayList
+            - LinkedList
+            - Stack
+            - Vector (비권장)
+            - ...
+        - Set
+            - 순서를 유지하지 않는 데이터 집합
+            - 데이터 중복 허용 X
+            - HashSet
+            - TreeSet
+            - ...
+    - Map
+        - 키, 값의 쌍으로 이루어진 데이터 집합
+        - 순서는 유지되지 않음
+        - 키 중복 허용 X, 값 중복 허용
+        - HashMap
+        - TreeMap
+        - HashTable (비권장)
+        - Properties (비권장)
+        - ...
+
+- Collection 인터페이스
+
+- List 인터페이스
+    - 상속도
+        - List
+            - Vector - Stack
+            - ArrayList
+            - LinkedList
+    
+    - ArrayList
+        - 메모리가 물리적으로 붙어있고(data locallity) 처음에 할당
+        - Indexing시, ArrayList  = O(1)
+        - 삽입 삭제 느리고, 검색이 빠름
+        - Vector를 개선한 것
+        - Vector = thread safe / ArrayList = non thread safe
+        - 데이터를 0부터 순차 저장
+        - 더이상 저장공간이 없으면 보다 큰 배열 생성해서 복사
+        - 데이터 삭제시 빈공간 채우기위해 나머지 요소가 앞으로 자리이동
+            - 감소 반복문으로 진행해야 에러가 나지 않음
+            - ```
+              for(int i=list.size()-1; i>=0; i--) {
+                  if(list.contains(list.get(i)))
+                    list.remove(i);
+              }
+              ```
+        - 실 저장할 데이터의 갯수보다 약간 더 큰 갯수로 초기화 권장
+            - 자동으로 크기 늘어날 때의 처리시간 소요가 크기 때문
+
+---
+# 진행중
+
+    - LinkedList ()
+        - que, deck 같은 순차처리 구조가 필요할 때 사용
+        - 매번 새로 노드 할당
+        - 랜덤 액세스시, 별도의 색인 사용
+        - delete가 필요할 시, 삭제 플래그를 세우고 차후 한번에 작업
+        - Indexing시, LinkedList = O(n)
+        - 삽입 삭제가 빠르고, 검색이 느림
+
+- Set 인터페이스
+    - 상속도
+        - Set
+            - HashSet
+            - SortedSet - TreeSet
+    
