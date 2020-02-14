@@ -749,7 +749,7 @@
     - ArrayList
         - 메모리가 물리적으로 붙어있고(data locallity) 처음에 할당
         - Indexing시, ArrayList  = O(1)
-        - 삽입 삭제 느리고, 검색이 빠름
+        - 삽입 삭제 느리고, 검색이 빠름 (순차적인 추가 삭제는 더 빠름(뒤에서 순차적))
         - Vector를 개선한 것
         - Vector = thread safe / ArrayList = non thread safe
         - 데이터를 0부터 순차 저장
@@ -765,20 +765,91 @@
         - 실 저장할 데이터의 갯수보다 약간 더 큰 갯수로 초기화 권장
             - 자동으로 크기 늘어날 때의 처리시간 소요가 크기 때문
 
----
-# 진행중
-
     - LinkedList ()
-        - que, deck 같은 순차처리 구조가 필요할 때 사용
+        - queue, deque 같은 순차처리 구조가 필요할 때 사용
         - 매번 새로 노드 할당
         - 랜덤 액세스시, 별도의 색인 사용
         - delete가 필요할 시, 삭제 플래그를 세우고 차후 한번에 작업
         - Indexing시, LinkedList = O(n)
         - 삽입 삭제가 빠르고, 검색이 느림
+        - 싱글 링크드리스트의 낮은 접근성 해결을 위해 더블 링크드리스트로 구현되어 있음
+
+    - Stack
+        - LIFO (후입선출)
+        - ArrayList로 구현
+        - 주요 함수
+            - empty
+            - peek
+            - pop
+            - push
+        - 활용
+            - 수식 계산, 수식 괄호 검사, undo/redo, 웹브라우저의 뒤로/앞으로
+
+    - Queue
+        - FIFO (선입선츨)
+        - LinkedList로 구현
+        - 주요 함수
+            - add
+            - remove
+            - peek
+        - 활용
+            - 최근사용문서, 인쇄작업 대기목록, 버퍼 등
+    - Iterator, ListIterator, Enumeration
+        - Enumeration / ListIterator Ref : 617p
+        - Enumeration : Iterator의 구식
+        - ListIterator : Iterator의 신식
+            - Iterator는 단방향 접근
+            - ListIterator은 양방향 접근, List인터페이스 구현 컬렉션에만 사용가능
+        -Iterator
+            - 주요 메소드
+                - boolean hasNext() : 읽을 요소 남았으면 true, 아니면 fasle
+                - Object next() : 다음요소를 읽어온다, hasNext랑 같이 사용
+                - void remove() : next()로 읽어온 요소 삭제, next->remove 로 사용
+            - 특이사항
+                - map에서 Iterator 사용시 map -> set으로 바꾼뒤 사용
+                - Iterator iter = map.entrySet().iterator();
 
 - Set 인터페이스
     - 상속도
         - Set
             - HashSet
             - SortedSet - TreeSet
+
+        - HashSet
+            - 내부적으로 HashMap으로 구현. 해싱을 이용했기에 붙여진 이름
+            - 저장순서를 유지하고 싶다면, ListHashSet 사용
+        
+        - TreeSet
+            - 이진 검색 트리(레드블랙 트리) 기반의 컬렉션 클래스
+            - 중복 데이터 저장 허용하지 않음, 저장순서 유지 하지 않음
+
+- Map 인터페이스
+    - HashTalbe : 구식 HashMap
+    - HashMap
+        - 키, 값 을 쌍(entry)으로 가지는 컬렉션
+        - 많은 양의 데이터 검색시 좋은 성능
+        - key값은 유일, 값은 중복 가능
+    - TreeMap
+        - 이진 검색 트리 기반으로 엔트리를 저장
+        - 장점 : 범위 검색과 정렬 (일반 검색은 HashMap이 더 빠름)
+
+- 해싱(Hashing)
+    - 해싱을 이용한 컬렉션 : HashSet / HashMap
+    - 해시 함수를 이용해 해시 테이블에 저장하고 검색하는 기법
+    - 배열 + 링크드 리스트 구조 (651p)
+    - 데이터를 찾는 과정 
+        - 검색하고자 하는 값의 키로 해시함수 호출
+        - 해시함수를 거쳐 계산결과(해시코드)로 값이 저장된 링크드 리스트 시작지를 찾음
+        - 링크드 리스트에서 검색한 키와 일치하는 데이터를 찾음
+
+- Arrays
+    - 배열과 관련된 메소드
+    - ref : 624p
+
+- Collections
+    - 컬렉션과 관련된 메소드
+    - ref : 664p
+
+
+
     
