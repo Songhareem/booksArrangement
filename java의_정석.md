@@ -850,6 +850,31 @@
     - 컬렉션과 관련된 메소드
     - ref : 664p
 
+# Chapter 12 지네릭스, 열거형, 애너테이션
+
+- 지네릭스 (Generics)
+    - C++의 template
+    - 타입 지정자
+    - 장점 
+        - 타입 안정성 제공
+        - 타입 체크 및 형변환 생략 => 코드 간결
+    - 지네릭 클래스 및 메서드 선언
+        - ```
+          class Box<T> {
+              T item;
+
+              void  setItem(T item) { this.item = item; }
+              T     getItem() { return item; }
+          }
+          ```
+    - 지네릭의 제한
+        - static T item // Err
+            - T = 인스턴스 변수, static 은 인스턴스 변수를 참조할 수 없음
+        - T[] itemArr; // 허용
+        - T[] itemArr = new T[] // Err
+            - new 와 instanceof 연산자는 T를 피연산자로 사용할 수 없음
+            - Reflection API의 newInstance() 또는 Object 배열 생성 후 T[]로 형변환 하여 해결 가능
+        
 
 
     
