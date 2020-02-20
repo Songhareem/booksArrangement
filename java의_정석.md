@@ -874,7 +874,116 @@
         - T[] itemArr = new T[] // Err
             - new 와 instanceof 연산자는 T를 피연산자로 사용할 수 없음
             - Reflection API의 newInstance() 또는 Object 배열 생성 후 T[]로 형변환 하여 해결 가능
-        
+    - 와일드 카드
+    - 제네릭 메서드
+    - 제네릭 타입의 형변환
+    - 제네릭 타입의 제거
+        - 패스 (ref : 678 ~ 689)
+    
+- 열거형 (Enum) 
+    - 클래스처럼 선언한뒤 변수를 따로 만들어서 사용
+    - 상수의 값이 바뀌면 해당 상수 참조하는 소스를 모두 재컴파일
+    - 열거형 상수 사용시, 기존의 소스를 재컴파일 하지 않음
+    - 상수를 정의할 때 사용
+    - ```
+      class Card {
+          enum Kind { CLOVER, HEART, DIAMOND, SPADE; }   // 열거형 Kind 정의
+          enum Value { TWO, THREE, FOUR; }               // 열거형 Value 정의
+
+          final Kind kind;  // type = Kind
+          final Value val;
+      }
+      ```
+    - 열거형 상수간 비교에는 '==' 사용 가능
+    - '>','<' 와 같은 비교연산자 사용시 compareTo() 사용
+    - 열거형이 불연속적인 경우
+        - ```
+          enum Direction { 
+              EAST(1), SOUTH(3), WEST(-1), NORTH(-4); 
+              
+              // 정수를 저장할 필드를 추가
+              private final int value;
+              
+              // 생성자를 추가 (밖에서 외부생성이 불가능 하도록 묵시적 priavate)
+              (private) Direction(int value) {
+                  this.value = value; 
+              }
+
+              public int getValue() { return value; }
+          }
+          ```
+    - 열거형에 추상메서드 추가하기
+    - 열거형에 대한 이해
+        - 패스 ref : 697 ~
+
+- 어노테이션 (Annotation)
+    
+    - 주석처럼 프로그래밍에 영향을 미치지 않으며, 유용한 정보 제공
+    
+    - 표준 어노테이션
+        - @Override : 컴파일러에게 오버라이딩 하는 메서드라는 것을 표기
+        - @Deprecated : 앞으로 사용하지 않을 것을 권장하는 대상에 표기
+        - @SuppressWarnings : 컴파일러의 특정 경고메시지가 나타나지 않게 표기
+        - @SafeVarargs : 제네릭스 타입의 가변인자에 사용
+        - @FunctionalInterfave : 함수형 인터페이스라는 것을 표기
+        - @Native : native 메서드에서 참조되는 상수 앞에 표기
+    
+    - 메타 어노테이션
+        - @Target : 애너테이션 적용 가능한 대상을 지정할 때 사용
+        - @Documented : 애너테이션 정보가 javadoc으로 작성된 문서에 포함하게 함
+        - @Inherited : 애너테이션이 자손 클래스에 상속되도록 함
+        - @Retention : 애너테이션이 유지되는 범위를 지정하는데 사용
+        - @Repeatable : 애너테이션을 반복해서 적용할 수 있게 함
+
+# Chapter 13 쓰레드 (Thread)
+
+- 프로세스?
+    - 실행중인 프로그램
+    - 메모리에 올라와서 작동하고 있는 프로그램
+
+- 쓰레드
+    - 프로세스 안의 작은 프로세스
+    - 각자의 메모리 공간(스택)을 가지며, thread별 workflow가 다름
+    - 경량 프로세스라고도 부름
+
+- 멀티태스킹과 멀티쓰레딩
+    - 대부분의 OS는 여러 프로세스가 동시에 돌아가는 멀티태스킹 지원
+    - 멀티쓰레딩, 하나의 프로세스 내에서 여러 쓰레드가 작업수행
+    - 논리 코어가 한 번에 단 하나의 작업 수행하므로, 실제로 동시에 처리하는 쓰레드 수는 논리 코어의 갯수와 일치
+
+- 멀티쓰레딩 장단점 
+    - 장점
+        - CPU 사용률 향상
+        - 자원 효율적 사용
+        - 응답성 향상
+        - 작업분리로 코드 간결
+    - 단점
+        - 교착상태 (Dead Lock)
+        - 동기화 (Syncronization)
+        - 컨텍스트 스위칭 비용
+
+- 쓰레드 구현
+     - Thread 클래스 상속
+     - Runnable 인터페이스 구현
+        - 다중 상속이 가능한 이 방법을 사용하는 것이 일반적
+    
+- 쓰레드 실행
+    - start()
+        - 새 스택을 생성해서 run()을 해당 스택에 올려두는 역할
+    - run()
+        - 쓰레드의 메인 method
+    
+- 싱글쓰레드에 비해 멀티쓰레드가 유용한 상황
+    - 각기 다른 자원을 사용 할 때
+
+- 쓰레드 우선순위
+    - 
+
+# 여기서부터 다시 시작
+
+- 쓰레드의 종류
+    - 사용자 쓰레드
+    - 데몬 쓰레드
 
 
     
